@@ -1,5 +1,5 @@
 # About
-> Basic Anime List React App build in react.js
+> Basic Anime List React App.
 
 ## Created React App using Below boilerplate 
 - https://github.com/react-boilerplate/react-boilerplate
