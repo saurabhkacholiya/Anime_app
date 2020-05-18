@@ -18,8 +18,8 @@ module.exports = require('./webpack.base.babel')({
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].chunk.js'
   },
 
   optimization: {
@@ -58,7 +58,7 @@ module.exports = require('./webpack.base.babel')({
             const packageName = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
             )[1];
-            return `Anime_app/npm.${packageName.replace('@', '')}`;
+            return `npm.${packageName.replace('@', '')}`;
           },
         },
       },
@@ -88,7 +88,7 @@ module.exports = require('./webpack.base.babel')({
     // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
     new OfflinePlugin({
       relativePaths: false,
-      publicPath: '/',
+      publicPath: './',
       appShell: '/',
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
