@@ -9,14 +9,19 @@ import saga from './saga';
 import styled from "styled-components";
 import { getSearchTermResult } from "./actions";
 import { selectSearchTermResult } from './selectors'
+import SearchImage from "../../images/search.png";
+import { defaultData } from "./constants";
 
 const SearchBar = styled.input`
-  height: 40px;
-  width: 400px;
-  padding: 10px;
-  margin: 10px;
-  border : none;
-  outline-width: 0;
+    height: 40px;
+    width: 350px;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    outline-width: 0;
+    font-size: 18px;
+    font-weight: bold;
+    padding-right: 50px;
 `
 
 const SearchBarWrapper = styled.div`
@@ -27,7 +32,6 @@ const SearchBarWrapper = styled.div`
   top: 0%;
   margin: 10px;
   border-collapse: collapse;
-
 `
 
 const SearchDiv = styled.div`
@@ -35,7 +39,48 @@ const SearchDiv = styled.div`
   display: flex;
   border: 1px solid black;
   border-collapse: collapse;
+  background: #fff;
+  justify-content: space-around;
+  position: relative;
+  .imgLogo{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 35px;
+  }
 `
+
+const ImageMainDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self:center;
+  flex-wrap: wrap;
+  margin: 20px;
+`
+
+const Card = styled.div`
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-radius: 20px 20px;
+  margin: 10px;
+  .imgCls{
+    display: flex;
+    flex: 0.8;
+    height: 80%;
+    min-width: 330px;
+    border-radius: 20px 20px 0 0;
+  }
+  .title{
+    display:flex;
+    flex:0.2;
+    justify-content: center;
+    align-items:center;
+  }
+`
+
 
 export function SearchScreen({
   getSearchTermResult,
@@ -63,21 +108,24 @@ export function SearchScreen({
       <SearchBarWrapper>
         <SearchDiv>
           <SearchBar 
+            placeholder="search for an anime, e.g Naruto"
             type="text"
             onChange={(e) => onChange(e.target.value)}
           />
+          <img className="imgLogo" src={SearchImage} alt="search image logo"/>
         </SearchDiv>
       </SearchBarWrapper>
-      <div>
+      <ImageMainDiv>
         {
-          searchTerm &&
-            searchTerm.map((item) => (
-              <div>
-                <span>{item.image_url}</span>
-              </div>
+          defaultData.data.results.map((item) => (
+              <Card>
+                <img className="imgCls" src={item.image_url}/>
+                <span className="title">{item.title}</span>
+              </Card>
             ))
         }
-      </div>
+      </ImageMainDiv>
+      
     </>
   )
 }

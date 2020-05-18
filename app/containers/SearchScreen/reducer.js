@@ -9,7 +9,7 @@ export const initialState = fromJS({
 })
 
 export default function searchScreenReducer(state = initialState, action) {
-  const immutableData = fromJS(action.data);
+  const immutableData = action.data
   switch (action.type) {
     case SET_SEARCH_TERM_RESULT:
       return state.set('searchTermResult', immutableData)
