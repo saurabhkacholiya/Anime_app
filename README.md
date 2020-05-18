@@ -1,10 +1,10 @@
 # About
 > Basic Anime List React App build in react.js
 
-# Created React App using Below boilerplate 
+## Created React App using Below boilerplate 
 - https://github.com/react-boilerplate/react-boilerplate
 
-# Deployed on github using below article
+## Deployed on github using below article
 - https://dev.to/yuribenjamin/how-to-deploy-react-app-in-github-pages-2a1f
 
 ## Feature's
