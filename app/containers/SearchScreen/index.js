@@ -84,6 +84,8 @@ const Card = styled.div`
     flex:0.2;
     justify-content: center;
     align-items:center;
+    text-align:center;
+    padding:10px;
   }
 `
 
