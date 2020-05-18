@@ -7,7 +7,13 @@ import { useInjectReducer } from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import styled from "styled-components";
-import { getSearchTermResult } from "./actions";
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import { 
+  getSearchTermResult,
+  fetchDataOnScrollEnd,
+  setSearchCurrentPageNo,
+  setSearchTermText
+} from "./actions";
 import { selectSearchTermResult } from './selectors'
 import SearchImage from "../../images/search.png";
 import { defaultData } from "./constants";
@@ -85,17 +91,26 @@ const Card = styled.div`
 export function SearchScreen({
   getSearchTermResult,
   searchTerm,
+  fetchDataOnScrollEnd,
+  setSearchCurrentPageNo,
+  setSearchTermText,
 }) {
   useInjectReducer({ key: 'searchScreen', reducer });
   useInjectSaga({ key: 'searchScreen', saga });
 
   console.log('searchTerm ', searchTerm)
 
+  useBottomScrollListener(() => {
+    setSearchCurrentPageNo()
+    fetchDataOnScrollEnd()
+  })
+
   const debounce = (callback,delay) => {
     let timer 
     return (data) => {
       clearInterval(timer)
       timer = setTimeout(() => {
+        setSearchTermText(data)
         callback(data)
       }, delay);
     }
@@ -117,12 +132,13 @@ export function SearchScreen({
       </SearchBarWrapper>
       <ImageMainDiv>
         {
-          defaultData.data.results.map((item) => (
-              <Card>
-                <img className="imgCls" src={item.image_url}/>
-                <span className="title">{item.title}</span>
-              </Card>
-            ))
+          searchTerm && 
+            searchTerm.map((item) => (
+                <Card>
+                  <img className="imgCls" src={item.image_url}/>
+                  <span className="title">{item.title}</span>
+                </Card>
+              ))
         }
       </ImageMainDiv>
       
@@ -137,7 +153,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getSearchTermResult: data => dispatch(getSearchTermResult(data))
+    getSearchTermResult: data => dispatch(getSearchTermResult(data)),
+    fetchDataOnScrollEnd: () => dispatch(fetchDataOnScrollEnd()),
+    setSearchCurrentPageNo: () => dispatch(setSearchCurrentPageNo()),
+    setSearchTermText: data => dispatch(setSearchTermText(data)),
   }
 }
 

@@ -20,3 +20,25 @@ export function setSearchTermResult(data){
     data
   }
 }
+
+export const SET_SEARCH_TERM_TEXT = 'app/SearchScreen/SET_SEARCH_TERM_TEXT'
+export function setSearchTermText(data){
+  return {
+    type: SET_SEARCH_TERM_TEXT,
+    data
+  }
+}
+
+export const SET_CURRENT_PAGE_NO = 'app/SearchScreen/SET_CURRENT_PAGE_NO'
+export function setSearchCurrentPageNo(data){
+  return {
+    type: SET_CURRENT_PAGE_NO,
+  }
+}
+
+export const FETCH_ON_SCROLL_END = 'app/SearchScreen/FETCH_ON_SCROLL_END'
+export function fetchDataOnScrollEnd(){
+  return {
+    type: FETCH_ON_SCROLL_END
+  }
+}
