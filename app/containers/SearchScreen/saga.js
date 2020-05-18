@@ -1,6 +1,28 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { 
+  take, 
+  call, 
+  put, 
+  select,
+  takeEvery,
+} from 'redux-saga/effects';
+import { 
+  GET_SEARCH_TERM_RESULT, 
+  setSearchTermResult,
+} from "./actions";
+import NetworkUtils from "../../utils/NetworkUtils";
+const { axiosInstance } = NetworkUtils
 
-// Individual exports for testing
+export function* fetchSearchData({data}) {
+  try {
+    const response = yield axiosInstance.get(`/search/anime?q=${data}&limit=16`);
+    if(response.status === 200){
+      yield put(setSearchTermResult(response.data.results))
+    }
+  } catch (error) {
+    window.alert('something went wrong please try again')
+  }
+}
+
 export default function* searchScreenSaga() {
-  // See example in containers/HomePage/saga.js
+  yield takeEvery(GET_SEARCH_TERM_RESULT, fetchSearchData);
 }

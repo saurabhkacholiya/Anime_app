@@ -1,20 +1,19 @@
-/*
- *
- * SearchScreen reducer
- *
- */
-import produce from 'immer';
-import { DEFAULT_ACTION } from './constants';
+import { fromJS } from 'immutable';
 
-export const initialState = {};
+import { 
+  SET_SEARCH_TERM_RESULT,
+} from './actions';
 
-/* eslint-disable default-case, no-param-reassign */
-const searchScreenReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
-    switch (action.type) {
-      case DEFAULT_ACTION:
-        break;
-    }
-  });
+export const initialState = fromJS({
+  searchTermResult: []
+})
 
-export default searchScreenReducer;
+export default function searchScreenReducer(state = initialState, action) {
+  const immutableData = fromJS(action.data);
+  switch (action.type) {
+    case SET_SEARCH_TERM_RESULT:
+      return state.set('searchTermResult', immutableData)
+    default:
+      return state;
+  }
+}
